@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold">To-Do List</h1>
+    <a routerLink="/todo/add" class="btn btn-success">+ Add Task</a>
+  </div>
+
+  <!-- Active Tasks Section -->
+  <h3 class="mb-3">Active Tasks</h3>
+  <div class="row g-4">
+    <div
+      *ngFor="let todo of incompleteTodos; let i = index"
+      class="col-12 col-md-6"
+    >
+      <div
+        class="card shadow-sm h-100"
+        [ngClass]="{ 'border-danger': isOverdue(todo.dueDate) }"
+      >
+        <div class="card-body d-flex flex-column justify-content-between">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <h5
+                class="card-title mb-2 fw-bold"
+                [ngClass]="{ 'text-decoration-line-through': todo.completed }"
+              >
+                {{ todo.title }}
+              </h5>
+              <p class="card-text text-muted">
+                Due: {{ todo.dueDate | date : "mediumDate" }}
+              </p>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [checked]="todo.completed"
+                (change)="markComplete(i)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Completed Tasks Section -->
+  <h3 class="mt-5 mb-3">Completed Tasks</h3>
+  <div class="row g-4">
+    <div *ngFor="let todo of completedTodos" class="col-12 col-md-6">
+      <div class="card shadow-sm h-100 bg-light">
+        <div class="card-body d-flex flex-column justify-content-between">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <h5 class="card-title mb-2 fw-bold text-decoration-line-through">
+                {{ todo.title }}
+              </h5>
+              <p class="card-text text-muted">
+                Due: {{ todo.dueDate | date : "mediumDate" }}
+              </p>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="form-check-input"
+                checked
+                disabled
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

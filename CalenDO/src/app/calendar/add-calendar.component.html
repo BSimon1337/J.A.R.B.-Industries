@@ -1,0 +1,56 @@
+<div class="mb-3 d-flex justify-content-between align-items-center">
+  <button class="btn btn-outline-primary" (click)="prevMonth()">
+    ← Previous
+  </button>
+  <h3 class="mb-0">{{ viewDate | date : "MMMM y" }}</h3>
+  <button class="btn btn-outline-primary" (click)="nextMonth()">Next →</button>
+</div>
+
+<div class="d-flex text-center fw-bold">
+  <div class="flex-fill">Sun</div>
+  <div class="flex-fill">Mon</div>
+  <div class="flex-fill">Tue</div>
+  <div class="flex-fill">Wed</div>
+  <div class="flex-fill">Thu</div>
+  <div class="flex-fill">Fri</div>
+  <div class="flex-fill">Sat</div>
+</div>
+
+<div class="d-flex flex-wrap border border-2">
+  <div
+    *ngFor="let blank of blanksArray"
+    class="border p-3 text-center"
+    style="width: 14.28%; height: 100px"
+  ></div>
+
+  <div
+    *ngFor="let day of getDaysInMonth()"
+    (click)="dayClicked(day)"
+    class="border p-3 text-center"
+    [ngClass]="{ 'bg-light': selectedDay === day }"
+    style="width: 14.28%; cursor: pointer; height: 100px"
+  >
+    {{ day }}
+  </div>
+</div>
+
+<div
+  *ngIf="modalVisible"
+  class="modal-backdrop"
+  style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  "
+>
+  <div class="bg-white p-4 rounded shadow" style="min-width: 300px">
+    <h5>You selected: Day {{ selectedDay }}</h5>
+    <button class="btn btn-secondary mt-3" (click)="closeModal()">Close</button>
+  </div>
+</div>

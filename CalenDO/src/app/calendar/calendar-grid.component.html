@@ -1,0 +1,72 @@
+<div class="calendar-container">
+  <!-- Month Header -->
+  <div class="calendar-header-bar">
+    <button class="nav-button" (click)="prevMonth()">←</button>
+    <h1 class="month-title">{{ viewDate | date : "MMMM yyyy" }}</h1>
+    <button class="nav-button" (click)="nextMonth()">→</button>
+  </div>
+
+  <!-- Calendar Grid -->
+  <div class="calendar-grid">
+    <div
+      class="calendar-cell calendar-header"
+      *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']"
+    >
+      {{ day }}
+    </div>
+
+    <div
+      class="calendar-cell empty"
+      *ngFor="let _ of [].constructor(getStartDay())"
+    ></div>
+
+    <div
+      class="calendar-cell"
+      *ngFor="let day of getDaysInMonth()"
+      (click)="dayClicked(day)"
+      [ngClass]="{ today: isToday(day) }"
+    >
+      <div class="day-number">{{ day.getDate() }}</div>
+
+      <!-- Events -->
+      <div
+        class="event-title small text-primary mt-1"
+        *ngFor="let event of getEventsForDate(day); let i = index"
+      >
+        • {{ event.title }}
+        <span class="text-muted small ms-2" (click)="editEvent(day, i)"
+          >✏️</span
+        >
+        <span class="text-danger small ms-2" (click)="deleteEvent(day, i)"
+          >🗑️</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    *ngIf="modalVisible"
+    class="modal-backdrop d-flex align-items-center justify-content-center"
+  >
+    <div class="bg-white p-4 rounded shadow" style="width: 350px">
+      <h4>{{ editingMode ? "Edit Event" : "Add Event for" }}</h4>
+      <p>{{ selectedDate | date : "fullDate" }}</p>
+
+      <div class="mb-3">
+        <input
+          [(ngModel)]="eventTitle"
+          class="form-control"
+          placeholder="Enter event title"
+        />
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button class="btn btn-primary" (click)="addEvent()">
+          {{ editingMode ? "Update" : "Save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

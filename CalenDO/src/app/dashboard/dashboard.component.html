@@ -1,0 +1,61 @@
+<div class="container">
+  <h1 class="mb-4 fw-bold">Dashboard</h1>
+
+  <div class="row g-4">
+    <!-- Upcoming Events -->
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm text-center h-100">
+        <div class="card-body">
+          <i class="bi bi-calendar-event display-4 text-primary mb-3"></i>
+          <h5 class="card-title fw-bold">Upcoming Events</h5>
+          <p class="card-text text-muted">3 upcoming events 📅</p>
+          <a routerLink="/calendar" class="btn btn-outline-primary btn-sm mt-2"
+            >View Calendar</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- To-Do Tasks -->
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm text-center h-100">
+        <div class="card-body">
+          <i class="bi bi-list-task display-4 text-success mb-3"></i>
+          <h5 class="card-title fw-bold">To-Do List</h5>
+          <p class="card-text text-muted">5 tasks remaining ✅</p>
+
+          <!-- Progress Bar -->
+          <div class="progress my-2" style="height: 8px">
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
+              style="width: 60%"
+              aria-valuenow="60"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+
+          <a routerLink="/todo" class="btn btn-outline-success btn-sm mt-2"
+            >View Tasks</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Classes -->
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm text-center h-100">
+        <div class="card-body">
+          <i class="bi bi-mortarboard display-4 text-info mb-3"></i>
+          <h5 class="card-title fw-bold">Classes</h5>
+          <span class="badge bg-info mb-2">4 Active Classes</span>
+          <p class="card-text text-muted">Stay organized! 🎓</p>
+          <a routerLink="/classes" class="btn btn-outline-info btn-sm mt-2"
+            >Manage Classes</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+.card h5 {
+    font-size: 1.2rem;
+}
+
+.card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form input,
+form .form-check-input {
+    font-size: 0.95rem;
+}
+
+form .form-check-label {
+    margin-left: 0.25rem;
+}
+
+.icon-btn {
+    border: none;
+    background-color: #f8f9fa;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 1.1rem;
+    transition: background-color 0.2s ease;
+}
+
+.icon-btn:hover {
+    background-color: #e2e6ea;
+    cursor: pointer;
+}
+
+.icon-btn.text-danger:hover {
+    background-color: #f8d7da;
+}

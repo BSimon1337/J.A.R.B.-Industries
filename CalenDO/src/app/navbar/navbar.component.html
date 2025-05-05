@@ -1,0 +1,50 @@
+<nav class="d-flex flex-column gap-2">
+  <a
+    class="btn btn-light d-flex align-items-center"
+    [ngClass]="{
+      'justify-content-start gap-2': sidebarOpen,
+      'justify-content-center': !sidebarOpen
+    }"
+    routerLink="/dashboard"
+    routerLinkActive="active"
+  >
+    <i class="bi bi-house"></i>
+    <span *ngIf="sidebarOpen">Dashboard</span>
+  </a>
+  <a
+    class="btn btn-light d-flex align-items-center"
+    [ngClass]="{
+      'justify-content-start gap-2': sidebarOpen,
+      'justify-content-center': !sidebarOpen
+    }"
+    routerLink="/calendar"
+    routerLinkActive="active"
+  >
+    <i class="bi bi-calendar"></i>
+    <span *ngIf="sidebarOpen">Calendar</span>
+  </a>
+  <a
+    class="btn btn-light d-flex align-items-center"
+    [ngClass]="{
+      'justify-content-start gap-2': sidebarOpen,
+      'justify-content-center': !sidebarOpen
+    }"
+    routerLink="/todo"
+    routerLinkActive="active"
+  >
+    <i class="bi bi-list-check"></i>
+    <span *ngIf="sidebarOpen">To-Do</span>
+  </a>
+  <a
+    class="btn btn-light d-flex align-items-center"
+    [ngClass]="{
+      'justify-content-start gap-2': sidebarOpen,
+      'justify-content-center': !sidebarOpen
+    }"
+    routerLink="/classes"
+    routerLinkActive="active"
+  >
+    <i class="bi bi-journal-bookmark"></i>
+    <span *ngIf="sidebarOpen">Classes</span>
+  </a>
+</nav>
