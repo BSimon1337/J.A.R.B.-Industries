@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CalendarService } from '../services/calendar.service';
 import { TodoService } from '../services/todo.service';
-import { ClassesService } from '../services/classes.service'; // <--- updated!
+import { ClassesService } from '../services/classes.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,11 +19,12 @@ export class DashboardComponent implements OnInit {
   remainingTasksCount: number = 0;
   activeClassesCount: number = 0;
   taskCompletionPercentage: number = 0;
+  isLoading: boolean = false;
 
   constructor(
     private calendarService: CalendarService,
     private todoService: TodoService,
-    private classesService: ClassesService  // <-- updated!
+    private classesService: ClassesService
   ) {}
 
   ngOnInit(): void {
@@ -30,9 +32,26 @@ export class DashboardComponent implements OnInit {
   }
 
   loadData() {
-    this.upcomingEventsCount = this.calendarService.getUpcomingEventsCount();
-    this.remainingTasksCount = this.todoService.getIncompleteTodosCount();
-    this.taskCompletionPercentage = this.todoService.getTodoCompletionPercentage();
-    this.activeClassesCount = this.classesService.getActiveClassesCount(); // <--- updated!
+    this.isLoading = true;
+    
+    // Use forkJoin to handle multiple observables
+    forkJoin({
+      upcomingEvents: this.calendarService.getUpcomingEventsCount(),
+      remainingTasks: this.todoService.getIncompleteTodosCount(),
+      taskCompletion: this.todoService.getTodoCompletionPercentage(),
+      activeClasses: this.classesService.getActiveClassesCount()
+    }).subscribe({
+      next: (results) => {
+        this.upcomingEventsCount = results.upcomingEvents;
+        this.remainingTasksCount = results.remainingTasks;
+        this.taskCompletionPercentage = results.taskCompletion;
+        this.activeClassesCount = results.activeClasses;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading dashboard data:', error);
+        this.isLoading = false;
+      }
+    });
   }
 }

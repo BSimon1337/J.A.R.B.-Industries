@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TodoService } from '../services/todo.service';
+import { TodoService, TodoTask } from '../services/todo.service';
 
 @Component({
   selector: 'app-add-todo',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './add-todo.component.html',
   styleUrls: ['./add-todo.component.css']
 })
@@ -15,17 +15,33 @@ export class AddTodoComponent {
 
   newTitle: string = '';
   newDueDate: string = '';
+  isSubmitting: boolean = false;
+  errorMessage: string = '';
 
   constructor(private todoService: TodoService, private router: Router) {}
 
   addTask() {
     if (this.newTitle && this.newDueDate) {
-      this.todoService.addTodo({
+      this.isSubmitting = true;
+      this.errorMessage = '';
+      
+      const newTodo: Partial<TodoTask> = {
         title: this.newTitle,
-        completed: false,
-        dueDate: new Date(this.newDueDate)
+        done: false,
+        due_date: this.newDueDate
+      };
+      
+      this.todoService.addTodo(newTodo as TodoTask).subscribe({
+        next: () => {
+          this.isSubmitting = false;
+          this.router.navigate(['/todo']);
+        },
+        error: (error) => {
+          this.isSubmitting = false;
+          this.errorMessage = 'Failed to add task. Please try again.';
+          console.error('Error adding todo:', error);
+        }
       });
-      this.router.navigate(['/todo']);
     }
   }
 

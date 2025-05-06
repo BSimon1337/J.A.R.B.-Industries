@@ -1,28 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { SchoolClass } from '../models/class.model';
 import { ClassesService } from '../services/classes.service';
 
 @Component({
   selector: 'app-classes',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './classes.component.html',
   styleUrls: ['./classes.component.css']
 })
-export class ClassesComponent {
+export class ClassesComponent implements OnInit {
   classes: SchoolClass[] = [];
   newClass: Partial<SchoolClass> = { daysOfWeek: [] };
   showForm: boolean = false;
   editingId: number | null = null;
+  isLoading: boolean = false;
 
-  constructor(private classesService: ClassesService) {
+  constructor(private classesService: ClassesService) {}
+
+  ngOnInit() {
     this.loadClasses();
   }
 
   loadClasses() {
-    this.classes = this.classesService.getAll();
+    this.isLoading = true;
+    this.classesService.getAll().subscribe({
+      next: (classes) => {
+        this.classes = classes;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading classes:', error);
+        this.isLoading = false;
+      }
+    });
   }
 
   addOrUpdateClass() {
@@ -33,7 +47,13 @@ export class ClassesComponent {
         ...this.newClass,
         id: this.editingId,
         daysOfWeek: [...this.newClass.daysOfWeek!]
-      } as SchoolClass);
+      } as SchoolClass).subscribe({
+        next: () => {
+          this.resetForm();
+          this.loadClasses();
+        },
+        error: (error) => console.error('Error updating class:', error)
+      });
     } else {
       const classToAdd: SchoolClass = {
         id: Date.now(),
@@ -43,16 +63,21 @@ export class ClassesComponent {
         time: this.newClass.time!,
         daysOfWeek: this.newClass.daysOfWeek!
       };
-      this.classesService.addClass(classToAdd);
+      this.classesService.addClass(classToAdd).subscribe({
+        next: () => {
+          this.resetForm();
+          this.loadClasses();
+        },
+        error: (error) => console.error('Error adding class:', error)
+      });
     }
-
-    this.resetForm();
-    this.loadClasses();
   }
 
   deleteClass(id: number) {
-    this.classesService.deleteClass(id);
-    this.loadClasses();
+    this.classesService.deleteClass(id).subscribe({
+      next: () => this.loadClasses(),
+      error: (error) => console.error('Error deleting class:', error)
+    });
   }
 
   editClass(cls: SchoolClass) {

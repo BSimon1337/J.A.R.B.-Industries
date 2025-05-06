@@ -47,4 +47,60 @@
     <i class="bi bi-journal-bookmark"></i>
     <span *ngIf="sidebarOpen">Classes</span>
   </a>
+  <a
+    class="btn btn-light d-flex align-items-center"
+    [ngClass]="{
+      'justify-content-start gap-2': sidebarOpen,
+      'justify-content-center': !sidebarOpen
+    }"
+    routerLink="/settings"
+    routerLinkActive="active"
+  >
+    <i class="bi bi-gear"></i>
+    <span *ngIf="sidebarOpen">Settings</span>
+  </a>
+  
+  <!-- Authentication Links -->
+  <div class="mt-auto">
+    <ng-container *ngIf="!authService.isLoggedIn">
+      <a
+        class="btn btn-primary d-flex align-items-center mt-3"
+        [ngClass]="{
+          'justify-content-start gap-2': sidebarOpen,
+          'justify-content-center': !sidebarOpen
+        }"
+        routerLink="/login"
+        routerLinkActive="active"
+      >
+        <i class="bi bi-box-arrow-in-right"></i>
+        <span *ngIf="sidebarOpen">Login</span>
+      </a>
+      <a
+        class="btn btn-success d-flex align-items-center mt-2"
+        [ngClass]="{
+          'justify-content-start gap-2': sidebarOpen,
+          'justify-content-center': !sidebarOpen
+        }"
+        routerLink="/register"
+        routerLinkActive="active"
+      >
+        <i class="bi bi-person-plus"></i>
+        <span *ngIf="sidebarOpen">Register</span>
+      </a>
+    </ng-container>
+    
+    <ng-container *ngIf="authService.isLoggedIn">
+      <button
+        class="btn btn-danger d-flex align-items-center mt-3"
+        [ngClass]="{
+          'justify-content-start gap-2': sidebarOpen,
+          'justify-content-center': !sidebarOpen
+        }"
+        (click)="authService.logout().subscribe()"
+      >
+        <i class="bi bi-box-arrow-right"></i>
+        <span *ngIf="sidebarOpen">Logout</span>
+      </button>
+    </ng-container>
+  </div>
 </nav>

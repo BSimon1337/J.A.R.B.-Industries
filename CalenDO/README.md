@@ -1,59 +1,87 @@
-# CalenDO
+# CalenDO Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.10.
+This is the Angular frontend for the CalenDO application, now updated to work with a Django backend for user authentication, settings management, and data persistence.
 
-## Development server
+## Setup Instructions
 
-To start a local development server, run:
+### Prerequisites
+- Node.js and npm
+- Angular CLI
 
-```bash
+### Installation
+
+1. Navigate to the frontend directory:
+   ```
+   cd CalenDO
+   ```
+2. Install the required packages:
+   ```
+   npm install
+   ```
+
+### Running the Application
+
+Start the development server:
+```
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The application will be available at http://localhost:4200/
 
-## Code scaffolding
+## Integration with Django Backend
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+This frontend is designed to work with the Django backend. Make sure the backend server is running at http://localhost:8000/ before using the application.
 
-```bash
-ng generate component component-name
-```
+### Authentication Flow
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+1. When you first access the application, you'll be redirected to the login page
+2. You can register a new account or log in with an existing one
+3. After successful authentication, you'll be redirected to the dashboard
+4. Your authentication token will be stored in localStorage and automatically included in API requests
 
-```bash
-ng generate --help
-```
+### Features Added
 
-## Building
+1. **User Authentication**
+   - Login and registration pages
+   - Token-based authentication
+   - Protected routes with auth guard
 
-To build the project run:
+2. **User Settings**
+   - Theme selection (light, dark, blue)
+   - Notification preferences
+   - Calendar view options
 
-```bash
-ng build
-```
+3. **Data Persistence**
+   - All data (calendar events, todo tasks, classes) is now stored on the server
+   - Data is synchronized across devices when you log in
+   - Fallback to local storage when offline
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Service Changes
 
-## Running unit tests
+All services have been updated to use HTTP requests instead of in-memory storage:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- **AuthService**: Handles user authentication and token management
+- **SettingsService**: Manages user settings
+- **CalendarService**: Now uses API for calendar events
+- **TodoService**: Now uses API for todo tasks
+- **ClassesService**: Now uses API for school classes
 
-```bash
-ng test
-```
+## Offline Support
 
-## Running end-to-end tests
+The application includes fallback mechanisms for when the API is unavailable:
 
-For end-to-end (e2e) testing, run:
+1. Services will use cached data when offline
+2. New data will be stored locally until connectivity is restored
+3. Authentication state is preserved across page reloads
 
-```bash
-ng e2e
-```
+## Troubleshooting
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+- **API Connection Issues**: Make sure the Django backend is running at http://localhost:8000/
+- **Authentication Errors**: Try clearing localStorage and logging in again
+- **CORS Errors**: The backend is configured to allow requests from http://localhost:4200/, but you may need to adjust this if using a different port
 
-## Additional Resources
+## Development Notes
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- The application uses Angular's standalone components
+- HTTP requests are handled through Angular's HttpClient
+- Authentication tokens are automatically added to requests via an HTTP interceptor
