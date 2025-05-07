@@ -5,3 +5,8 @@ aside {
 .navbarStyles{
     background-color: var(--bisonGreen);
 }
+img{
+    width: 100%;
+}
+.image {
+}
