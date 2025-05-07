@@ -1,7 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+    --bisonGreen: #0a5640;
+    --offWhite: #f8f8f8;
+}
+
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #f0f2f5;
+    background-color: #f8f8f8;
     margin: 0;
     color: #333;
 }

@@ -2,3 +2,7 @@ aside {
     transition: width 0.3s ease;
     min-height: 100vh;
 }
+
+.navbarStyles{
+    background-color: var(--bisonGreen);
+}
