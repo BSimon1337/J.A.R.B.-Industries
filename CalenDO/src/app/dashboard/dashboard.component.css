@@ -1,5 +1,8 @@
+.cardStyles {
+    border-radius: 0px;
+}
+
 .card {
-    border-radius: 1rem;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
