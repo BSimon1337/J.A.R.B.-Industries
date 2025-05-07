@@ -36,6 +36,32 @@ i {
     margin-top: 10px;
 }
 
-.g-4{
-    
+.card-title { 
+    font-family: sans-serif;
+}
+
+.card-body{
+    display: grid;
+}
+
+.upper {
+    height: 6rem;
+}
+
+.lower {
+    align-content: center;
+}
+
+.btn{
+    height: 2rem;
+    border: 1px solid lightgrey;
+    font-weight: 100;
+}
+
+.badge{
+    background-color: var(--bisonGreen);
+}
+
+.progress-bar {
+    background-color: var(--bisonGreen)
 }

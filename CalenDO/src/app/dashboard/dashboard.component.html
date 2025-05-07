@@ -6,12 +6,16 @@
     <div class="col-12 col-md cardStyles">
       <div class="card text-center">
         <div class="card-body">
-          <i class="bi bi-calendar-event display-4 text-primary mb-3"></i>
-          <h5 class="card-title fw-bold">Upcoming Events</h5>
-          <p class="card-text text-muted">3 upcoming events 📅</p>
-          <a routerLink="/calendar" class="btn btn-outline-primary btn-sm mt-2"
-            >View Calendar</a
-          >
+          <div class="upper">
+            <i class="bi bi-calendar-event display-4 text-primary mb-3"></i>
+            <h5 class="card-title">Upcoming Events</h5>
+            <p class="card-text text-muted">3 upcoming events 📅</p>
+          </div>
+          <div class="lower">
+            <a routerLink="/calendar" class="btn btn-sm mt-2"
+              >View Calendar</a
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -20,25 +24,28 @@
     <div class="col-12 col-md cardStyles">
       <div class="card text-center">
         <div class="card-body">
-          <i class="bi bi-list-task display-4 text-success mb-3"></i>
-          <h5 class="card-title fw-bold">To-Do List</h5>
-          <p class="card-text text-muted">5 tasks remaining ✅</p>
+          <div class="upper">
+            <i class="bi bi-list-task display-4 text-success mb-3"></i>
+            <h5 class="card-title">To-Do List</h5>
+            <p class="card-text text-muted">5 tasks remaining ✅</p>
 
-          <!-- Progress Bar -->
-          <div class="progress my-2" style="height: 8px">
-            <div
-              class="progress-bar bg-success"
-              role="progressbar"
-              style="width: 60%"
-              aria-valuenow="60"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
+            <!-- Progress Bar -->
+            <div class="progress my-2" style="height: 8px">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                style="width: 60%"
+                aria-valuenow="60"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
           </div>
-
-          <a routerLink="/todo" class="btn btn-outline-success btn-sm mt-2"
-            >View Tasks</a
-          >
+          <div class="lower">
+            <a routerLink="/todo" class="btn btn-sm mt-2"
+              >View Tasks</a
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -47,13 +54,17 @@
     <div class="col-12 col-md cardStyles">
       <div class="card text-center">
         <div class="card-body">
-          <i class="bi bi-mortarboard display-4 text-info mb-3"></i>
-          <h5 class="card-title fw-bold">Classes</h5>
-          <span class="badge bg-info mb-2">4 Active Classes</span>
-          <p class="card-text text-muted">Stay organized! 🎓</p>
-          <a routerLink="/classes" class="btn btn-outline-info btn-sm mt-2"
-            >Manage Classes</a
-          >
+          <div class="upper">
+            <i class="bi bi-mortarboard display-4 text-info mb-3"></i>
+            <h5 class="card-title">Classes</h5>
+            <p class="card-text text-muted">Stay organized! 🎓</p>
+            <span class="badge mb-2">4 Active Classes</span>
+          </div>
+          <div class="lower">
+            <a routerLink="/classes" class="btn btn-sm mt-2"
+              >Manage Classes</a
+            >
+          </div>
         </div>
       </div>
     </div>
