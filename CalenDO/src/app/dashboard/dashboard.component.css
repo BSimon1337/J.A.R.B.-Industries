@@ -4,6 +4,8 @@
 
 .card {
     transition: transform 0.2s, box-shadow 0.2s;
+    height: 11rem;
+    min-width: 14rem;
 }
 
 .card:hover {
@@ -32,4 +34,8 @@ i {
 
 .row{
     margin-top: 10px;
+}
+
+.g-4{
+    
 }
