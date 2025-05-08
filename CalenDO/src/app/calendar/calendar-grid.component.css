@@ -1,3 +1,15 @@
+h4 {
+    font-family: serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+p {
+    font-family: sans-serif;
+    font-size: 1rem;
+    font-weight: 200;
+}
+
 .calendar-container {
     max-width: 90%;
     padding: 1.5rem;
@@ -109,4 +121,8 @@
 
 .modal-backdrop .bg-white {
     z-index: 1000;
+}
+
+.btn-primary {
+    background-color: var(--bisonGreen);
 }
