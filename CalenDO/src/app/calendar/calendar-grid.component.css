@@ -14,18 +14,20 @@
 
 .month-title {
     font-size: 2.5rem;
-    font-weight: 600;
+    font-weight: 500;
     margin: 0;
+    font-family: serif;
 }
 
 .nav-button {
     font-size: 2rem;
-    padding: 0.25rem 1rem;
+    padding: 0rem 1rem;
     background-color: transparent;
-    border: 2px solid #ccc;
-    border-radius: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
     cursor: pointer;
     transition: 0.2s ease;
+    height: 4rem;
 }
 
 .nav-button:hover {
@@ -42,13 +44,14 @@
     width: 100%;
     aspect-ratio: 1 / 1;
     border: 1px solid #ddd;
-    border-radius: 20px;
+    border-radius: 4px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     padding: 0.8rem;
     font-size: 1.3rem;
+    font-family: sans-serif;
     background-color: #fdfdfd;
     transition: background-color 0.2s ease;
     position: relative;
@@ -65,15 +68,16 @@
     justify-content: center;
     align-items: center;
     font-size: 1.3rem;
+    height: 2rem;
 }
 
 .today {
-    background-color: #007bff;
+    background-color: var(--bisonGreen);
     color: white;
 }
 
 .day-number {
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .empty {
