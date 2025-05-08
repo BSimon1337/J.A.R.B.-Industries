@@ -2,6 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { ClassesService } from '../services/classes.service';
 
 interface Grade {
   id: number;
