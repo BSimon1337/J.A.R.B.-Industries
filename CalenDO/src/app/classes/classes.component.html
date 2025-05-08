@@ -1,14 +1,14 @@
-<div class="container-fluid py-4 px-5 bg-white min-vh-100">
+<div class="container-fluid py-4 px-5 min-vh-100">
   <!-- Page Title -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold text-dark mb-0">📚 My Classes</h2>
+    <h2 class="text-dark mb-0">My Classes</h2>
     <button class="btn btn-success" (click)="showForm = !showForm">
       {{
         showForm
           ? editingId !== null
             ? "Editing Class"
             : "Close Form"
-          : "➕ Add Class"
+          : "+ Add Class"
       }}
     </button>
   </div>
@@ -93,16 +93,16 @@
 
   <div class="row g-4" *ngIf="classes.length > 0">
     <div class="col-md-6 col-lg-4" *ngFor="let cls of classes">
-      <div class="card shadow-sm border-0 rounded-4 p-3 h-100">
+      <div class="card p-3 h-100">
         <div class="d-flex justify-content-between">
           <div>
-            <h5 class="fw-semibold mb-1">{{ cls.name }}</h5>
-            <div class="text-muted small mb-1">
+            <h5 class="mb-1">{{ cls.name }}</h5>
+            <div class="card-text text-muted small mb-1">
               {{ cls.instructor }} – {{ cls.location }}
             </div>
-            <div><strong>Time:</strong> {{ cls.time }}</div>
+            <div class="card-text time">Time: {{ cls.time }}</div>
             <div>
-              <small class="text-muted"
+              <small class="card-text text-muted"
                 >Days: {{ cls.daysOfWeek.join(", ") }}</small
               >
             </div>

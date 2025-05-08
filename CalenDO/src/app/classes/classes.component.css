@@ -1,9 +1,25 @@
-.card h5 {
-    font-size: 1.2rem;
+h2 {
+    font-family: serif;
+    font-weight: 500;
+    font-size: 2.5rem;
 }
 
-.card:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.card-text {
+    font-family: serif;
+}
+
+.time{
+    font-size: 1.1rem;
+}
+
+h5{
+    font-family: serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+.card{
+    border-radius: 4px;
 }
 
 form input,
