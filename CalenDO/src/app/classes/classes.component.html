@@ -1,14 +1,18 @@
-<div class="container-fluid py-4 px-5 bg-white min-vh-100">
-  <!-- Page Title -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold text-dark mb-0">📚 My Classes</h2>
-    <button class="btn btn-success" (click)="showForm = !showForm">
+
+<div class="container-fluid py-4 px-5 min-vh-100">
+  <!-- Header with Logo -->
+  <div class="header d-flex justify-content-between align-items-center mb-4">
+    <div class="header-left d-flex align-items-center">
+      <img src="assets/logo.png" alt="Logo" class="logo me-3" />
+      <h2 class="title mb-0">My Classes</h2>
+    </div>
+    <button class="btn btn-add" (click)="showForm = !showForm">
       {{
         showForm
           ? editingId !== null
             ? "Editing Class"
             : "Close Form"
-          : "➕ Add Class"
+          : "+ Add Class"
       }}
     </button>
   </div>
@@ -17,110 +21,126 @@
   <form
     *ngIf="showForm"
     (ngSubmit)="addOrUpdateClass()"
-    class="row g-3 mb-5 p-4 bg-light rounded-4 shadow-sm"
+    class="class-form row g-3 mb-5 p-4 rounded-4 shadow"
   >
-    <div class="col-md-3">
-      <input
-        class="form-control"
-        [(ngModel)]="newClass.name"
-        name="name"
-        placeholder="Class Name"
-        required
-      />
-    </div>
-    <div class="col-md-2">
-      <input
-        class="form-control"
-        [(ngModel)]="newClass.time"
-        name="time"
-        placeholder="Time"
-        required
-      />
-    </div>
-    <div class="col-md-3">
-      <input
-        class="form-control"
-        [(ngModel)]="newClass.instructor"
-        name="instructor"
-        placeholder="Instructor"
-      />
-    </div>
-    <div class="col-md-4">
-      <input
-        class="form-control"
-        [(ngModel)]="newClass.location"
-        name="location"
-        placeholder="Location"
-      />
+    <input class="form-control col-md-3" [(ngModel)]="newClass.name"       name="name"       placeholder="Class Name" required />
+    <input class="form-control col-md-2" [(ngModel)]="newClass.time"       name="time"       placeholder="Time"       required />
+    <input class="form-control col-md-3" [(ngModel)]="newClass.instructor" name="instructor" placeholder="Instructor" />
+    <input class="form-control col-md-4" [(ngModel)]="newClass.location"   name="location"   placeholder="Location"   />
+
+    <div class="col-12 days d-flex flex-wrap gap-3 mt-2">
+      <label *ngFor="let d of ['Mon','Tue','Wed','Thu','Fri']" class="day-check">
+        <input type="checkbox"
+               [value]="d"
+               (change)="toggleDay(d)"
+               [checked]="newClass.daysOfWeek?.includes(d)" />
+        {{ d }}
+      </label>
     </div>
 
-    <div class="col-12 d-flex flex-wrap gap-3 mt-2">
-      <div
-        *ngFor="let day of ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']"
-        class="form-check"
-      >
-        <input
-          type="checkbox"
-          class="form-check-input"
-          [value]="day"
-          (change)="toggleDay(day)"
-          [checked]="newClass.daysOfWeek?.includes(day)"
-          id="{{ day }}"
-        />
-        <label class="form-check-label" for="{{ day }}">{{ day }}</label>
-      </div>
-    </div>
-
-    <div class="col-12 d-flex justify-content-between gap-2">
-      <button type="submit" class="btn btn-primary w-100">
+    <div class="col-12 d-flex gap-2">
+      <button type="submit" class="btn btn-save w-100">
         {{ editingId !== null ? "Update Class" : "Save Class" }}
       </button>
       <button
         *ngIf="editingId !== null"
         type="button"
-        class="btn btn-outline-secondary"
+        class="btn btn-cancel"
         (click)="cancelEdit()"
-      >
-        Cancel
-      </button>
+      >Cancel</button>
     </div>
   </form>
 
-  <!-- Class Display -->
-  <div *ngIf="classes.length === 0" class="text-muted text-center py-5">
-    No classes added yet. Click “Add Class” to get started!
+  <!-- Class Cards -->
+  <div *ngIf="!classes.length" class="no-classes text-center py-5">
+    No classes yet. Click “Add Class” to start!
   </div>
-
-  <div class="row g-4" *ngIf="classes.length > 0">
+  <div class="row g-4" *ngIf="classes.length">
     <div class="col-md-6 col-lg-4" *ngFor="let cls of classes">
-      <div class="card shadow-sm border-0 rounded-4 p-3 h-100">
-        <div class="d-flex justify-content-between">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
           <div>
-            <h5 class="fw-semibold mb-1">{{ cls.name }}</h5>
-            <div class="text-muted small mb-1">
-              {{ cls.instructor }} – {{ cls.location }}
-            </div>
-            <div><strong>Time:</strong> {{ cls.time }}</div>
-            <div>
-              <small class="text-muted"
-                >Days: {{ cls.daysOfWeek.join(", ") }}</small
-              >
-            </div>
+            <h5 class="card-title">{{ cls.name }}</h5>
+            <p class="card-sub">{{ cls.instructor }} – {{ cls.location }}</p>
+            <p class="card-time"><strong>Time:</strong> {{ cls.time }}</p>
+            <p class="card-days">Days: {{ cls.daysOfWeek.join(", ") }}</p>
           </div>
-          <div class="d-flex flex-column align-items-end gap-2">
-            <button class="icon-btn" (click)="editClass(cls)" title="Edit">
-              ✏️
+          <div class="actions d-flex flex-column align-items-end">
+            <button class="btn-action edit" (click)="editClass(cls)" title="Edit">
+              Edit
             </button>
-            <button
-              class="icon-btn text-danger"
-              (click)="deleteClass(cls.id)"
-              title="Delete"
-            >
-              🗑️
+            <button class="btn-action delete" (click)="deleteClass(cls.id)" title="Delete">
+              Delete
             </button>
           </div>
         </div>
+
+        <hr />
+
+        <!-- Gradees -->
+        <h6 class="grades-header">Grades</h6>
+        <ul *ngIf="cls.grades.length; else noGrades">
+          <li *ngFor="let g of cls.grades" class="grade-item d-flex justify-content-between">
+            <span>
+              {{ g.name }} — 
+              <em>Score:</em> {{ g.score }}%,
+              <em>Weight:</em> {{ g.weight }}%
+            </span>
+            <button
+              class="btn btn-sm btn-delete-grade"
+              (click)="deleteGrade(cls.id, g.id)"
+            >×</button>
+          </li>
+        </ul>
+        <ng-template #noGrades>
+          <p class="text-muted small">No grades yet.</p>
+        </ng-template>
+
+        <!-- Adding Grade -->
+        <div class="add-grade d-flex flex-wrap gap-2 align-items-end mb-3">
+          <input class="form-control form-control-sm"
+                 [(ngModel)]="gradeInputs[cls.id].name"
+                 name="gname{{cls.id}}"
+                 placeholder="Assignment Name" />
+          <input class="form-control form-control-sm"
+                 type="number"
+                 [(ngModel)]="gradeInputs[cls.id].score"
+                 name="gscore{{cls.id}}"
+                 placeholder="Score (%)" />
+          <input class="form-control form-control-sm"
+                 type="number"
+                 [(ngModel)]="gradeInputs[cls.id].weight"
+                 name="gweight{{cls.id}}"
+                 placeholder="Weight (%)" />
+          <button class="btn btn-add-grade btn-sm"
+                  (click)="addGrade(cls.id)"
+                  [disabled]="!weightOk(cls, cls.id)">Add</button>
+        </div>
+
+        <!-- Averages and Needs -->
+        <div class="stats">
+          <p>
+            <strong>Current Grade:</strong>
+            <span *ngIf="currentAverage(cls) !== null; else naAvg">
+              {{ currentAverage(cls)! | number:'1.1-1' }}%
+              ({{ letterGrade(currentAverage(cls)) }})
+            </span>
+            <ng-template #naAvg>NA</ng-template>
+          </p>
+          <p><strong>To get a A (90%):</strong> {{ displayNeed(cls, 90) }}</p>
+          <p><strong>To get a B (80%):</strong> {{ displayNeed(cls, 80) }}</p>
+          <p><strong>To get a C (70%):</strong> {{ displayNeed(cls, 70) }}</p>
+          <p><strong>To get a D (60%):</strong> {{ displayNeed(cls, 60) }}</p>
+        </div>
       </div>
     </div>
+  </div>
+
+  <!-- Overall Average  grade-->
+  <div *ngIf="overallAverage() !== null" class="overall">
+    <h4>
+      Overall Average:
+      {{ overallAverage()! | number:'1.1-1' }}%
+    </h4>
   </div>
 </div>
