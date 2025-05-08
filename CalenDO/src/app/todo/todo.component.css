@@ -35,3 +35,8 @@ h3 {
 btn {
     font-family: sans-serif;
 }
+
+.header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid lightgrey;
+}

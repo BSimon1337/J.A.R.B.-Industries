@@ -3,6 +3,10 @@ h1 {
     font-family: serif;
     font-weight: 500;
 }
+.header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid lightgrey;
+}
 
 form {
     max-width: 600px;

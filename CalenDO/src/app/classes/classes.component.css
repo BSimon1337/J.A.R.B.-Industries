@@ -59,3 +59,8 @@ form .form-check-label {
 .icon-btn.text-danger:hover {
     background-color: #f8d7da;
 }
+
+.header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid lightgrey;
+}
