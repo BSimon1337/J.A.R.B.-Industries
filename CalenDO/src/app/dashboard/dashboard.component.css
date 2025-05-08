@@ -65,3 +65,15 @@ i {
 .progress-bar {
     background-color: var(--bisonGreen)
 }
+
+#calendar {
+    height: 4rem;
+}
+
+#checkbox {
+    height: 3rem;
+}
+
+#book {
+    height: 4rem;
+}
