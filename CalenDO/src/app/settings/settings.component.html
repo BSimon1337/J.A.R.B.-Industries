@@ -1,0 +1,81 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h4 class="mb-0">User Settings</h4>
+          <button class="btn btn-sm btn-outline-light" (click)="logout()">Logout</button>
+        </div>
+        
+        <div class="card-body">
+          <div *ngIf="successMessage" class="alert alert-success">
+            {{ successMessage }}
+          </div>
+          
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+          
+          <form (ngSubmit)="saveSettings()">
+            <!-- Theme Selection -->
+            <div class="mb-4">
+              <label class="form-label fw-bold">Theme</label>
+              <div class="d-flex flex-wrap gap-3">
+                <div *ngFor="let theme of themes" class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    name="theme" 
+                    [id]="'theme-' + theme.value" 
+                    [value]="theme.value" 
+                    [(ngModel)]="settings.theme">
+                  <label class="form-check-label" [for]="'theme-' + theme.value">
+                    {{ theme.label }}
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Calendar View Preference -->
+            <div class="mb-4">
+              <label class="form-label fw-bold">Default Calendar View</label>
+              <select 
+                class="form-select" 
+                [(ngModel)]="settings.calendar_view" 
+                name="calendarView">
+                <option *ngFor="let view of calendarViews" [value]="view.value">
+                  {{ view.label }}
+                </option>
+              </select>
+            </div>
+            
+            <!-- Notification Settings -->
+            <div class="mb-4">
+              <label class="form-label fw-bold">Notifications</label>
+              <div class="form-check form-switch">
+                <input 
+                  class="form-check-input" 
+                  type="checkbox" 
+                  id="notificationToggle" 
+                  [(ngModel)]="settings.notification_enabled" 
+                  name="notificationEnabled">
+                <label class="form-check-label" for="notificationToggle">
+                  Enable notifications
+                </label>
+              </div>
+            </div>
+            
+            <div class="d-grid gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-primary" 
+                [disabled]="isSaving">
+                {{ isSaving ? 'Saving...' : 'Save Settings' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

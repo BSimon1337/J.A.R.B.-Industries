@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TodoService } from '../services/todo.service';
+import { TodoService, TodoTask } from '../services/todo.service';
 
 @Component({
   selector: 'app-todo',
@@ -12,8 +12,9 @@ import { TodoService } from '../services/todo.service';
 })
 export class TodoComponent implements OnInit {
 
-  incompleteTodos: { title: string; completed: boolean; dueDate: Date }[] = [];
-  completedTodos: { title: string; completed: boolean; dueDate: Date }[] = [];
+  incompleteTodos: TodoTask[] = [];
+  completedTodos: TodoTask[] = [];
+  isLoading: boolean = false;
 
   constructor(private todoService: TodoService) {}
 
@@ -22,18 +23,29 @@ export class TodoComponent implements OnInit {
   }
 
   loadTodos() {
-    const allTodos = this.todoService.getAllTodos();
-    this.incompleteTodos = allTodos.filter(todo => !todo.completed);
-    this.completedTodos = allTodos.filter(todo => todo.completed);
+    this.isLoading = true;
+    this.todoService.getAllTodos().subscribe({
+      next: (allTodos) => {
+        this.incompleteTodos = allTodos.filter(todo => !todo.done);
+        this.completedTodos = allTodos.filter(todo => todo.done);
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading todos:', error);
+        this.isLoading = false;
+      }
+    });
   }
 
   markComplete(index: number) {
-    this.incompleteTodos[index].completed = true;
-    this.todoService.markTodoComplete(this.incompleteTodos[index]);
-    this.loadTodos(); // Refresh the lists
+    const todo = this.incompleteTodos[index];
+    this.todoService.markTodoComplete(todo).subscribe({
+      next: () => this.loadTodos(), // Refresh the lists
+      error: (error) => console.error('Error marking todo as complete:', error)
+    });
   }
 
-  isOverdue(dueDate: Date): boolean {
+  isOverdue(dueDate: string): boolean {
     return new Date(dueDate) < new Date();
   }
 }

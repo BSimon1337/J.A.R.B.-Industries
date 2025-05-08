@@ -1,25 +1,44 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { CalendarService, CalendarEvent } from '../services/calendar.service';
 
 @Component({
   selector: 'app-calendar-grid',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './calendar-grid.component.html',
   styleUrls: ['./calendar-grid.component.css']
 })
-export class CalendarGridComponent {
+export class CalendarGridComponent implements OnInit {
   @Input() viewDate: Date = new Date();
   @Output() dateSelected = new EventEmitter<Date>();
 
   selectedDate: Date | null = null;
   modalVisible = false;
   editingMode = false;
-  editingIndex: number | null = null;
+  editingEvent: CalendarEvent | null = null;
 
   eventTitle: string = '';
-  events: { date: Date, title: string }[] = [];
+  events: CalendarEvent[] = [];
+  
+  constructor(private calendarService: CalendarService) {}
+  
+  ngOnInit(): void {
+    this.loadEvents();
+  }
+  
+  loadEvents(): void {
+    this.calendarService.getAllEvents().subscribe({
+      next: (events) => {
+        this.events = events;
+      },
+      error: (error) => {
+        console.error('Error loading events:', error);
+      }
+    });
+  }
 
   getDaysInMonth(): Date[] {
     const year = this.viewDate.getFullYear();
@@ -60,21 +79,41 @@ export class CalendarGridComponent {
     this.selectedDate = day;
     this.modalVisible = true;
     this.editingMode = false;
+    this.editingEvent = null;
     this.eventTitle = '';
   }
 
   addEvent() {
     if (this.selectedDate && this.eventTitle.trim()) {
-      if (this.editingMode && this.editingIndex !== null) {
-        this.events[this.editingIndex].title = this.eventTitle.trim();
-      } else {
-        this.events.push({
-          date: new Date(this.selectedDate),
+      if (this.editingMode && this.editingEvent) {
+        // Update existing event
+        const updatedEvent: CalendarEvent = {
+          ...this.editingEvent,
           title: this.eventTitle.trim()
+        };
+        
+        this.calendarService.updateEvent(updatedEvent).subscribe({
+          next: () => {
+            this.loadEvents();
+            this.resetModal();
+          },
+          error: (error) => console.error('Error updating event:', error)
+        });
+      } else {
+        // Add new event
+        const newEvent: CalendarEvent = {
+          title: this.eventTitle.trim(),
+          date: this.selectedDate.toISOString()
+        };
+        
+        this.calendarService.addEvent(newEvent).subscribe({
+          next: () => {
+            this.loadEvents();
+            this.resetModal();
+          },
+          error: (error) => console.error('Error adding event:', error)
         });
       }
-
-      this.resetModal();
     }
   }
 
@@ -85,21 +124,28 @@ export class CalendarGridComponent {
     this.eventTitle = event.title;
     this.editingMode = true;
     this.modalVisible = true;
-
-    this.editingIndex = this.events.findIndex(e => e.date.toDateString() === event.date.toDateString() && e.title === event.title);
+    this.editingEvent = event;
   }
 
   deleteEvent(day: Date, index: number) {
     const eventsForDay = this.getEventsForDate(day);
     const event = eventsForDay[index];
-    const globalIndex = this.events.findIndex(e => e.date.toDateString() === event.date.toDateString() && e.title === event.title);
-    if (globalIndex > -1) {
-      this.events.splice(globalIndex, 1);
+    
+    if (event.id) {
+      this.calendarService.deleteEvent(event.id).subscribe({
+        next: () => {
+          this.loadEvents();
+        },
+        error: (error) => console.error('Error deleting event:', error)
+      });
     }
   }
 
   getEventsForDate(date: Date) {
-    return this.events.filter(event => event.date.toDateString() === date.toDateString());
+    return this.events.filter(event => {
+      const eventDate = new Date(event.date);
+      return eventDate.toDateString() === date.toDateString();
+    });
   }
 
   closeModal() {
@@ -109,7 +155,7 @@ export class CalendarGridComponent {
   resetModal() {
     this.modalVisible = false;
     this.editingMode = false;
-    this.editingIndex = null;
+    this.editingEvent = null;
     this.eventTitle = '';
   }
 }
