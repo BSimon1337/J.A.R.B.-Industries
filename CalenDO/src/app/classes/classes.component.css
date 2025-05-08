@@ -1,66 +1,132 @@
-h2 {
-    font-family: serif;
-    font-weight: 500;
-    font-size: 2.5rem;
-}
 
-.card-text {
-    font-family: serif;
-}
-
-.time{
-    font-size: 1.1rem;
-}
-
-h5{
-    font-family: serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.card {
-    transition: transform 0.2s, box-shadow 0.2s;
-    border-radius: 4px;
-}
-
-form input,
-form .form-check-input {
-    font-size: 0.95rem;
-}
-
-form .form-check-label {
-    margin-left: 0.25rem;
-}
-
-.icon-btn {
+/* colors */
+:host {
+    --deep-green: #013220;
+    --gold:       #FFD700;
+    --light-bg:   #F2F5F1;
+    --dark-text:  #0E1312;
+  }
+  
+  /* background */
+  .container-fluid {
+    background-color: var(--light-bg);
+    background-image: url('/assets/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  /* logo */
+  .logo {
+    height: 40px;
+    width: auto;
+  }
+  
+  /* header */
+  .header {
+    border-bottom: 2px solid var(--deep-green);
+  }
+  .header-left .title {
+    color: var(--gold);
+    font-size: 1.75rem;
+  }
+  .btn-add {
+    background: var(--deep-green);
+    color: var(--gold);
     border: none;
-    background-color: #f8f9fa;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  }
+  .btn-add:hover {
+    background: #024731;
+  }
+  
+  /* the FORM */
+  .class-form {
+    background: rgba(255,255,255,0.9);
+  }
+  .class-form .form-control {
+    border: 1px solid var(--deep-green);
+  }
+  .class-form .form-control:focus {
+    box-shadow: 0 0 0 .2rem rgba(1,50,32,.25);
+  }
+  .btn-save {
+    background: var(--gold);
+    color: var(--deep-green);
+    border: none;
+  }
+  .btn-cancel {
+    background: transparent;
+    border: 1px solid var(--deep-green);
+    color: var(--deep-green);
+  }
+  
+  /* Days */
+  .day-check {
+    color: var(--dark-text);
+  }
+  .day-check input {
+    margin-right: .25rem;
+  }
+  
+  /* cards */
+  .card {
+    background: var(--deep-green);
+    color: #FFF;
+    border-radius: .5rem;
+    padding: 1rem;
+  }
+  .card-title {
+    margin: 0;
+    color: var(--gold);
+  }
+  .card-sub, .card-time, .card-days {
+    margin: 0;
+    font-size: .9rem;
+  }
+  
+  /* Action buttons */
+  .btn-action {
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-weight: 500;
     padding: 0;
-    font-size: 1.1rem;
-    transition: background-color 0.2s ease;
-}
-
-.icon-btn:hover {
-    background-color: #e2e6ea;
-    cursor: pointer;
-}
-
-.icon-btn.text-danger:hover {
-    background-color: #f8d7da;
-}
-
-.header {
-    padding-bottom: 20px;
-    border-bottom: 1px solid lightgrey;
-}
+    margin: 0.125rem 0;
+  }
+  .btn-action:hover {
+    text-decoration: underline;
+  }
+  
+  /* grades stuff */
+  .grade-item {
+    font-size: .9rem;
+  }
+  .btn-delete-grade {
+    background: transparent;
+    border: none;
+    color: #FF6666;
+  }
+  
+  /* Adding grade */
+  .btn-add-grade {
+    background: var(--gold);
+    color: var(--deep-green);
+    border: none;
+  }
+  .btn-add-grade:disabled {
+    opacity: .5;
+  }
+  
+  /* Stats and overall average */
+  .stats p {
+    margin: .25rem 0;
+  }
+  .overall {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: var(--gold);
+    color: var(--deep-green);
+    text-align: center;
+    border-radius: .5rem;
+  }
+  
