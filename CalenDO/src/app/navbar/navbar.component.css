@@ -19,3 +19,13 @@ nav {
 span {
     font-family: sans-serif;
 }
+
+.login-btn {
+    background-color: var(--bisonGreen);
+}
+
+.register-btn{
+    background-color: var(--bisonGreen);
+    color: white;
+    border: 1px solid;
+}

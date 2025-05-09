@@ -64,7 +64,7 @@
   <div class="mt-auto">
     <ng-container *ngIf="!authService.isLoggedIn">
       <a
-        class="btn btn-primary d-flex align-items-center mt-3"
+        class="login-btn btn d-flex align-items-center mt-3"
         [ngClass]="{
           'justify-content-start gap-2': sidebarOpen,
           'justify-content-center': !sidebarOpen
@@ -76,7 +76,7 @@
         <span *ngIf="sidebarOpen">Login</span>
       </a>
       <a
-        class="btn btn-success d-flex align-items-center mt-2"
+        class="register-btn btn d-flex align-items-center mt-3"
         [ngClass]="{
           'justify-content-start gap-2': sidebarOpen,
           'justify-content-center': !sidebarOpen

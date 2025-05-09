@@ -4,11 +4,16 @@
 
 .card-header {
   font-weight: bold;
+  background-color: var(--bisonGreen);
+}
+
+.btn {
+  background-color: var(--bisonGreen);
 }
 
 .form-check-input:checked {
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: var(--bisonGreen);
+  border-color: var(--bisonGreen);
 }
 
 .form-switch .form-check-input {

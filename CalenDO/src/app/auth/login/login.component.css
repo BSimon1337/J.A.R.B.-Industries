@@ -4,10 +4,12 @@
 
 .card-header {
   font-weight: bold;
+  background-color: var(--bisonGreen);
 }
 
 .btn-primary {
   transition: all 0.3s;
+  background-color: var(--bisonGreen);
 }
 
 .btn-primary:hover {
